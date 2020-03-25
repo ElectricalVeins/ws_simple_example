@@ -1,26 +1,53 @@
 import React from 'react';
-import logo from './logo.svg';
+import logo  from './logo.svg';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const socket = new WebSocket( 'ws://localhost:3000/' );
+
+socket.onopen = ( event ) => {
+  alert( 'connection opened' );
+  console.dir( event )
+};
+
+socket.onclose = ( event ) => {
+  alert( 'connection closed' );
+  console.dir( event )
+};
+
+socket.onmessage=(event)=>{
+  console.dir(event)
+}
+
+class App extends React.Component {
+  constructor( props ) {
+    super( props );
+    this.state = {
+      messages: [],
+      messageValue: '',
+    }
+  }
+
+  sendMessage = () => {
+    socket.send( this.state.messageValue );
+  };
+
+  handleChange = ( e ) => {
+    this.setState( {
+      messageValue: e.target.value,
+    } )
+  };
+
+  render() {
+    return (
+      <>
+        <input type="textarea"
+               value={this.state.messageValue}
+               onChange={this.handleChange}
+        />
+        <button onClick={this.sendMessage}>SEND MESSAGE</button>
+      </>
+    );
+  }
 }
 
 export default App;
