@@ -1,53 +1,21 @@
-import React from 'react';
-import logo  from './logo.svg';
+import React, {Component} from 'react';
 import './App.css';
+import {emitTest} from './api/ws/api.js';
 
-const socket = new WebSocket( 'ws://localhost:3000/' );
+class App extends Component{
 
-socket.onopen = ( event ) => {
-  alert( 'connection opened' );
-  console.dir( event )
-};
+	render() {
 
-socket.onclose = ( event ) => {
-  alert( 'connection closed' );
-  console.dir( event )
-};
+		return (
+				<>
 
-socket.onmessage=(event)=>{
-  console.dir(event)
-}
 
-class App extends React.Component {
-  constructor( props ) {
-    super( props );
-    this.state = {
-      messages: [],
-      messageValue: '',
-    }
-  }
-
-  sendMessage = () => {
-    socket.send( this.state.messageValue );
-  };
-
-  handleChange = ( e ) => {
-    this.setState( {
-      messageValue: e.target.value,
-    } )
-  };
-
-  render() {
-    return (
-      <>
-        <input type="textarea"
-               value={this.state.messageValue}
-               onChange={this.handleChange}
-        />
-        <button onClick={this.sendMessage}>SEND MESSAGE</button>
-      </>
-    );
-  }
+					<button onClick={ () => emitTest('test', {test: 'test'}) }>Send
+						message >
+					</button>
+				</>
+		);
+	}
 }
 
 export default App;

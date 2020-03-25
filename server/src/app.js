@@ -1,21 +1,20 @@
-const express = require( 'express' );
-
+const http = require('http');
+const express = require('express');
+const socketIO = require('socket.io');
 const app = express();
-const expressWs = require( 'express-ws' )( app );
-const aWss = expressWs.getWss( '/' );
+const server = http.Server(app);
+const io = socketIO(server);
+const connectionHandler = require('./ws');
 
-app.use( express.json() );
+const router = require('./router');
 
-app.ws( '/', ( ws, req ) => {
-  ws.on( 'message', ( msg ) => {
-    console.log( msg );
-    aWss.clients.forEach( ( client ) => {
-      client.send( msg );
-    } )
-  } );
-  console.log( req.testing )
-} );
+app.use(router);
+
+io.on('connection', connectionHandler);
 
 const PORT = process.env.PORT || 3000;
 
-app.listen( PORT, () => console.log( `App listening on port ${PORT}!` ) );
+server.listen(PORT,
+		() => console.log(`Example app listening on port ${ PORT }!`));
+
+
