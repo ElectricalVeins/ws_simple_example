@@ -6,7 +6,5 @@ export const emitTest = ( data, options ) =>
 export const emitMessage = ( room, message ) =>
   socket.emit( 'message', room, message );
 
-socket.on( 'test_answer', ( string, data ) => {
-  alert( string );
-  console.dir( data );
-} );
+export const joinToRoom=(room)=>
+  socket.emit('join-to-room',room);

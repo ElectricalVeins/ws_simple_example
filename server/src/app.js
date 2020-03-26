@@ -12,15 +12,25 @@ const router = require( './router' );
 app.use( router );
 //ws
 
-
+const rooms = [ 'room1', 'room2' ];
+const joinToRooms = ( socket ) => {
+  rooms.forEach( room => {
+    socket.join( room )
+  } )
+};
 io.on( 'connection', ( socket ) => {
+  joinToRooms( socket );
 
-  socket.on( 'test', ( data, options ) => {
-    socket.emit( 'test_answer', 'Test event server emit' )
+  socket.on( 'message', ( room, message ) => {
+    io.in( room ).emit( 'new-message',room, message )
   } );
 
+  socket.on('join-to-room',(room)=>{
+    socket.join(room)
+  });
 
-  socket.on( 'disconnect', ( reason ) => {} )
+  socket.on( 'disconnect', ( reason ) => {
+  } )
 
 } );
 
