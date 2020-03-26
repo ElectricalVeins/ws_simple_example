@@ -1,21 +1,24 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import './App.css';
-import {emitTest} from './api/ws/api.js';
+import { emitTest }         from "./api/ws/api";
 
-class App extends Component{
-
-	render() {
-
-		return (
-				<>
+class App extends Component {
 
 
-					<button onClick={ () => emitTest('test', {test: 'test'}) }>Send
-						message >
-					</button>
-				</>
-		);
-	}
+  render() {
+    return (
+      <>
+
+        <button type='submit'
+                onClick={() => {
+                  emitTest( 'test', { test: 'test' } )
+                }}>
+          Send message >
+        </button>
+
+      </>
+    );
+  }
 }
 
 export default App;
