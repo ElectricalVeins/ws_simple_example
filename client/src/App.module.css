@@ -1,3 +1,4 @@
+/*
 body {
   background-color: #282c34;
   min-height: 100vh;
@@ -8,12 +9,14 @@ body {
   font-size: calc(10px + 2vmin);
   color: white;
 }
+*/
 
 .roomsContainer{
   display: flex;
   justify-content: space-between;
   min-width: 80vw;
 }
+/*
 
 .messageList{
   color:black;
@@ -21,4 +24,26 @@ body {
   margin:0 20px;
   min-height: 60vh;
   background-color: white;
+}
+*/
+.container {
+  display: flex;
+  justify-content: space-between;
+  min-width: 80vw;
+  width: 100vw;
+  height: 100vh;
+
+}
+
+.messagesListWrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: black;
+  color: white;
+
+}
+
+.messagesListWrapper > ol {
+  flex: 1;
 }
